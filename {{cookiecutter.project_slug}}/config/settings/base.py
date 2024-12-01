@@ -76,6 +76,9 @@ DJANGO_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # "django.contrib.humanize", # Handy template tags
+{%- if cookiecutter.use_djangocms == 'y' %}
+    "djangocms_admin_style", # cms styles for admin 
+{%- endif %}
     "django.contrib.admin",
     "django.forms",
 ]
@@ -97,6 +100,41 @@ THIRD_PARTY_APPS = [
 {%- endif %}
 {%- if cookiecutter.frontend_pipeline == 'Webpack' %}
     "webpack_loader",
+{%- endif %}
+{%- if cookiecutter.use_djangocms == 'y' %}
+    "cms",
+    "menus",
+    "treebeard",
+    "sekizai",
+    "djangocms_alias",
+    "parler",
+    "djangocms_versioning",
+    "easy_thumbnails",
+    "filer",
+    'djangocms_frontend',
+    'djangocms_frontend.contrib.accordion',
+    'djangocms_frontend.contrib.alert',
+    'djangocms_frontend.contrib.badge',
+    'djangocms_frontend.contrib.card',
+    'djangocms_frontend.contrib.carousel',
+    'djangocms_frontend.contrib.collapse',
+    'djangocms_frontend.contrib.content',
+    'djangocms_frontend.contrib.grid',
+    'djangocms_frontend.contrib.icon',
+    'djangocms_frontend.contrib.image',
+    'djangocms_frontend.contrib.jumbotron',
+    'djangocms_frontend.contrib.link',
+    'djangocms_frontend.contrib.listgroup',
+    'djangocms_frontend.contrib.media',
+    'djangocms_frontend.contrib.tabs',
+    'djangocms_frontend.contrib.utilities',
+    "djangocms_text_ckeditor",
+    "djangocms_file",
+    "djangocms_picture",
+    "djangocms_video",
+    "djangocms_googlemap",
+    "djangocms_snippet",
+    "djangocms_style",
 {%- endif %}
 ]
 
@@ -165,6 +203,13 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "allauth.account.middleware.AccountMiddleware",
+{%- if cookiecutter.use_djangocms == 'y' %}
+    "cms.middleware.user.CurrentUserMiddleware",
+    "cms.middleware.page.CurrentPageMiddleware",
+    "cms.middleware.toolbar.ToolbarMiddleware",
+    "cms.middleware.language.LanguageCookieMiddleware",
+    "cms.middleware.utils.ApphookReloadMiddleware",
+{%- endif %}
 ]
 
 # STATIC
@@ -205,12 +250,18 @@ TEMPLATES = [
                 "django.template.context_processors.debug",
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
+                {%- if cookiecutter.use_djangocms %}
+                "sekizai.context_processors.sekizai", # cms
+                {%- endif %}
                 "django.template.context_processors.i18n",
                 "django.template.context_processors.media",
                 "django.template.context_processors.static",
                 "django.template.context_processors.tz",
                 "django.contrib.messages.context_processors.messages",
                 "{{cookiecutter.project_slug}}.users.context_processors.allauth_settings",
+                {%- if cookiecutter.use_djangocms %}
+                "cms.context_processors.cms_settings",
+                {%- endif %}
             ],
         },
     },
@@ -389,6 +440,28 @@ WEBPACK_LOADER = {
     },
 }
 
+{%- endif %}
+{%- if cookiecutter.use_djangocms %}
+CMS_CONFIRM_VERSION4 = True
+X_FRAME_OPTIONS = "SAMEORIGIN"
+CMS_TEMPLATES = [
+    ('home_base.html', 'Base page template'),
+    ('base.html', "Clean base template"),
+]
+THUMBNAIL_HIGH_RESOLUTION = True
+
+THUMBNAIL_PROCESSORS = (
+    'easy_thumbnails.processors.colorspace',
+    'easy_thumbnails.processors.autocrop',
+    'filer.thumbnail_processors.scale_and_crop_with_subject_location',
+    'easy_thumbnails.processors.filters'
+)
+META_SITE_PROTOCOL = 'https'  # set 'http' for non ssl enabled websites
+META_USE_SITES = True
+META_USE_OG_PROPERTIES=True
+META_USE_TWITTER_PROPERTIES=True
+META_USE_GOOGLEPLUS_PROPERTIES=True # django-meta 1.x+
+META_USE_SCHEMAORG_PROPERTIES=True  # django-meta 2.x+
 {%- endif %}
 # Your stuff...
 # ------------------------------------------------------------------------------

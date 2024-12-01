@@ -78,3 +78,8 @@ if settings.DEBUG:
         import debug_toolbar
 
         urlpatterns = [path("__debug__/", include(debug_toolbar.urls))] + urlpatterns
+{%- if cookiecutter.use_django_cms %}
+urlpatterns += [
+    path("", include("cms.urls")),
+]
+{%- endif %}

@@ -49,3 +49,18 @@ drf-spectacular==0.27.2  # https://github.com/tfranzel/drf-spectacular
 {%- if cookiecutter.frontend_pipeline == 'Webpack' %}
 django-webpack-loader==3.1.1  # https://github.com/django-webpack/django-webpack-loader
 {%- endif %}
+{%- if cookiecutter.use_djangocms == 'y' %}
+django-cms==4.1.3 # https://github.com/django-cms/django-cms
+djangocms-text-ckeditor==5.1.6 # https://github.com/django-cms/djangocms-text-ckeditor
+djangocms-frontend==1.3.4 # https://github.com/django-cms/djangocms-frontend
+django-filer==3.2.3 # https://github.com/django-cms/django-filer
+djangocms-versioning # https://github.com/django-cms/djangocms-versioning
+djangocms-alias #egg=djangocms-alias  # https://github.com/django-cms/djangocms-alias
+djangocms-admin-style==3.3.1 # https://github.com/django-cms/djangocms-admin-style
+djangocms-file==3.0.1  # https://github.com/django-cms/djangocms-file
+djangocms-picture==4.1.1 # https://github.com/django-cms/djangocms-picture 
+djangocms-video==3.1.0 # https://github.com/django-cms/djangocms-video 
+djangocms-googlemap==2.2.0  # https://github.com/django-cms/djangocms-googlemap
+djangocms-snippet==3.1.1 # https://github.com/django-cms/djangocms-snippet 
+djangocms-style==3.1.0 #https://github.com/django-cms/djangocms-style
+{%- endif %}

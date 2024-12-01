@@ -32,7 +32,9 @@
     "webpack-bundle-tracker": "^3.0.1",
     "webpack-cli": "^5.0.1",
     "webpack-dev-server": "^5.0.2",
-    "webpack-merge": "^6.0.1"
+    "webpack-merge": "^6.0.1",
+    "gsap":"^3.12.5",
+    "mdb-ui-kit": "^7.0.0",
   },
   "engines": {
     "node": "22"
